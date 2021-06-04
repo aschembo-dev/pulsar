@@ -78,3 +78,35 @@ jobs:
       - name: build package
         if: ${{ steps.check_changes.outputs.docs_only != 'true' }}
         run: mvn -B clean install -DskipTests
+        
+        
+      - name: Configure AWS Credentials CodeGuru
+        uses: aws-actions/configure-aws-credentials@v1
+        if: ${{ always() }}
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Checkout the CodeGuru Reviewer Action repository
+        uses: actions/checkout@v2
+        if: ${{ always() }}
+        with:
+          repository: vijejain/cicd-actions-bugbash
+          ref: refs/heads/main
+          token: ${{ secrets.TOKEN }}   # Required for Private Beta
+          path: ./.github/vijejain/cicd-actions-bugbash
+
+      - name: AWS CodeGuru Reviewer Scanner
+        uses: ./.github/vijejain/cicd-actions-bugbash
+        if: ${{ always() }}
+        with:
+          source_path: .
+          build_path: target
+          s3_bucket: codeguru-reviewer-test-cicd-bucket
+
+      - name: Upload review result
+        if: ${{ always() }}
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: codeguru-results.sarif.json
