@@ -24,7 +24,7 @@ on:
       - master
   push:
     branches:
-      - branch-*
+      - master
 
 env:
   MAVEN_OPTS: -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.http.retryHandler.class=standard -Dmaven.wagon.http.retryHandler.count=3
@@ -32,7 +32,7 @@ env:
 jobs:
 
   build:
-    name:
+    name: test
     runs-on: macos-latest
     timeout-minutes: 120
 
