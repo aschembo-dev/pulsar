@@ -61,6 +61,13 @@ jobs:
           ref: refs/heads/main
           token: ${{ secrets.TOKEN }}   # Required for Private Beta
           path: ./.github/vijejain/cicd-actions-bugbash
+          
+      - name: Free space
+        run: | 
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
 
       - name: AWS CodeGuru Reviewer Scanner
         uses: ./.github/vijejain/cicd-actions-bugbash
