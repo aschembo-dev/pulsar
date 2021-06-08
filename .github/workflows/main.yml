@@ -19,9 +19,8 @@
 
 name: CI - Build - MacOS
 on:
-  pull_request:
-    branches:
-      - master
+  push:
+    branches: [main] 
       
   workflow_dispatch:
     inputs:
