@@ -39,7 +39,12 @@ jobs:
     timeout-minutes: 120
 
     steps:
-      
+    
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
       - name: Configure AWS Credentials CodeGuru
         uses: aws-actions/configure-aws-credentials@v1
         if: ${{ always() }}
