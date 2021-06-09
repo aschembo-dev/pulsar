@@ -73,7 +73,7 @@ jobs:
         uses: ./.github/vijejain/cicd-actions-bugbash
         if: ${{ always() }}
         with:
-          source_path: pulsar-broker 
+          source_path: .
           s3_bucket: codeguru-reviewer-test-cicd-bucket
 
       - name: Upload review result
